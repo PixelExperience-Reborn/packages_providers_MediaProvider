@@ -1,0 +1,31 @@
+name: Android 17 MediaProvider historical source audit
+
+on:
+  push:
+    branches:
+      - audit/a17-mondrian-mediaprovider-20261104
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  historical-provider-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            Android.bp
+            AndroidManifest.xml
+            TEST_MAPPING
+            apex/Android.bp
+            src/com/android/providers/media/MediaProvider.java
+            docs
+            tools
+          sparse-checkout-cone-mode: false
+      - name: Validate old APEX and thumbnail logging risk markers
+        run: python3 tools/verify_a17_mediaprovider_legacy.py
