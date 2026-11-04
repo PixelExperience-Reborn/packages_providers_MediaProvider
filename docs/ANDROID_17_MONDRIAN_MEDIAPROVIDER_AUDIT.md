@@ -20,6 +20,8 @@ Official AOSP17 `Android.bp` also uses `module_current`, but additionally includ
 - new `legacy/src/...LegacyDatabaseUtils.java` and related database compatibility modules (historical file list refers to Android14 `src/...DatabaseUtils.java` and several non-equivalent older Java classes);
 - `privapp_allowlist`, `apex_available: ["com.android.mediaprovider"]`, `updatable: true`, plus AppSearch and additional errorprone processing.
 
+**Critical APEX split:** the official AOSP17 `apex/Android.bp` packages both `MediaProvider` and **`Photopicker`**, plus `libpdfclient`, and its bootclasspath fragment contains `framework-mediaprovider`, `framework-pdf`, `framework-pdf-v`, `framework-photopicker`. The archived APEX packages only `MediaProvider` and its old single framework fragment; copying it would drop the modern Photo Picker/PDF components. Exact official APEX file: https://android.googlesource.com/platform/packages/providers/MediaProvider/+/refs/tags/android-17.0.0_r1/apex/Android.bp .
+
 Official Soong blob: `70e4a9f3b7b3e440974ea0deadf1c77aa0079dbd`. See https://android.googlesource.com/platform/packages/providers/MediaProvider/+/refs/tags/android-17.0.0_r1/Android.bp .
 
 ## Legacy PixelExperience patch
